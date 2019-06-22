@@ -1,12 +1,13 @@
 import React from 'react';
 import './css/pure-min.css';
 import './css/side-menu.css';
+import $ from 'jquery';
 
 class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {lista : [{nome: 'gabriel', email:'email@email.com', senha:'12345'}]}
+    this.state = {lista : []}
   }
 
   render() {
