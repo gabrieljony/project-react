@@ -7,10 +7,31 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {lista : []}
+    this.state = {lista : []};
+  }
+
+  // component acabou de ser montado, logo quando o render é envocado pela 1 vez essa função é chamado
+  componentDidMount() {
+
+  }
+
+  // função antes do render ser chamado pela 1 vez
+  componentWillMount() {
+    console.log("WillMount");
+    $.ajax({
+        url:"http://localhost:8080/api/autores",
+        dataType: 'json',
+        success: function(resposta) {
+          console.log("chegou agora");
+          console.log(this);
+          this.setState({lista: resposta});
+        }.bind(this)
+      }
+    );
   }
 
   render() {
+    console.log("render");
     return (
       <div id="layout">
           <a href="#menu" id="menuLink" className="menu-link">
