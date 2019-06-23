@@ -3,6 +3,7 @@ import $ from 'jquery';
 import InputCustomizado from './components/InputCustomizado';
 import SubmitCustomizado from './components/SubmitCustomizado';
 import PubSub from 'pubsub-js';
+import TratadorErros from './TratadorErros';
 
 class FormularioAutor extends Component {
 
@@ -33,10 +34,22 @@ class FormularioAutor extends Component {
             // this.setState({lista: resposta});
             // this.props.callbackAtualizaListagem(resposta);
             PubSub.publish('atualiza-lista-autores', resposta);
-        },
+            this.setState({nome:'',email:'',senha:''})//limpa o formulario
+        }.bind(this),
         error: function(resposta){
-            console.log(resposta);
-            console.log("erro");
+            // console.log(resposta);
+            // console.log("erro");
+            if(resposta.status === 500) {
+                //recuperar quais foram os erros
+                //exibir a mensagem de erro no campo - span
+                new TratadorErros().publicaErros(resposta.responseJSON);
+            }
+            if(resposta.status === 400) {
+                new TratadorErros().publicaErros(resposta.responseJSON);
+            }
+        },
+        beforeSend: function(){
+            PubSub.publish("limpa-erros", {});
         }
         });
     }
