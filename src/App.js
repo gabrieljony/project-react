@@ -28,16 +28,8 @@ class App extends React.Component {
           </div>
 
           <div id="main">
-                  <div className="header">
-                    <h1>Bem Vindo ao Sistema</h1>
-                  </div>
-                  
-
-                  
-                     
-                                
-                  
-                </div>     
+            {this.props.children}                
+          </div>     
       </div>
     );
   }
